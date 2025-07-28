@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Home AI Official</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .price-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .price-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-input-group label {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-table th,
+        .products-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .products-table th {
+            background: #f8fafc;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .products-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .json-output {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-top: 1rem;
+            white-space: pre;
+        }
+
+        .copy-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: #3182ce;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #e6f3ff;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .price-inputs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .products-table {
+                font-size: 0.9rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">AI</div>
+                    <div class="logo-text">Home AI Official - Admin</div>
+                </div>
+                <div style="color: #667eea; font-weight: bold;">Product Management</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <h1 class="page-title">🛠️ Admin Panel - Kelola Produk</h1>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('add-product')">➕ Tambah Produk</button>
+                <button class="tab" onclick="switchTab('manage-products')">📋 Kelola Produk</button>
+                <button class="tab" onclick="switchTab('export-import')">📁 Export/Import</button>
+            </div>
+
+            <!-- Add Product Tab -->
+            <div id="add-product" class="tab-content active">
+                <div class="form-section">
+                    <h3>➕ Tambah Produk Baru</h3>
+                    <form id="addProductForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="productId">ID Produk *</label>
+                                <input type="text" id="productId" name="productId" required 
+                                       placeholder="contoh: chatgpt-plus" pattern="[a-z0-9-]+" 
+                                       title="Gunakan huruf kecil, angka, dan tanda strip saja">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="productName">Nama Produk *</label>
+                                <input type="text" id="productName" name="productName" required 
+                                       placeholder="contoh: ChatGPT Plus">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productDescription">Deskripsi Produk *</label>
+                            <textarea id="productDescription" name="productDescription" rows="3" required 
+                                      placeholder="Jelaskan fitur dan keunggulan produk ini..."></textarea>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="productCategory">Kategori *</label>
+                                <select id="productCategory" name="productCategory" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="AI Assistant">AI Assistant</option>
+                                    <option value="AI Image Generator">AI Image Generator</option>
+                                    <option value="AI Coding">AI Coding</option>
+                                    <option value="Productivity">Productivity</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Writing">Writing</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productEmoji">Emoji Fallback *</label>
+                                <input type="text" id="productEmoji" name="productEmoji" required 
+                                       placeholder="🤖" maxlength="2">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productImage">URL Gambar (Opsional)</label>
+                            <input type="url" id="productImage" name="productImage" 
+                                   placeholder="https://example.com/image.png">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Harga per Durasi (Rupiah) *</label>
+                            <div class="price-inputs">
+                                <div class="price-input-group">
+                                    <label>1 Bulan</label>
+                                    <input type="number" id="price1" name="price1" required min="1000" step="1000" placeholder="20000">
+                                </div>
+                                <div class="price-input-group">
+                                    <label>2 Bulan</label>
+                                    <input type="number" id="price2" name="price2" required min="1000" step="1000" placeholder="40000">
+                                </div>
+                                <div class="price-input-group">
+                                    <label>3 Bulan</label>
+                                    <input type="number" id="price3" name="price3" required min="1000" step="1000" placeholder="60000">
+                                </div>
+                                <div class="price-input-group">
+                                    <label>6 Bulan</label>
+                                    <input type="number" id="price6" name="price6" required min="1000" step="1000" placeholder="120000">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">✅ Tambah Produk</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Manage Products Tab -->
+            <div id="manage-products" class="tab-content">
+                <div class="form-section">
+                    <h3>📋 Daftar Produk</h3>
+                    <button class="btn btn-secondary" onclick="loadProducts()">🔄 Refresh Data</button>
+                    
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Harga Mulai</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem; color: #666;">
+                                    Memuat data produk...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Export/Import Tab -->
+            <div id="export-import" class="tab-content">
+                <div class="form-section">
+                    <h3>📁 Export Data</h3>
+                    <p>Download file JSON yang bisa digunakan sebagai database produk:</p>
+                    <button class="btn btn-success" onclick="exportProducts()">📥 Download products.json</button>
+                    
+                    <div id="jsonPreview" style="display: none;">
+                        <h4 style="margin-top: 2rem; margin-bottom: 1rem;">Preview JSON:</h4>
+                        <div class="json-output" id="jsonOutput"></div>
+                        <button class="copy-btn" onclick="copyToClipboard()">📋 Copy ke Clipboard</button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>📁 Import Data</h3>
+                    <p>Upload file products.json untuk mengganti data produk:</p>
+                    
+                    <div class="upload-area" id="importUploadArea">
+                        <p>📁 Klik atau drag file products.json ke sini</p>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Format: JSON (Max: 5MB)</p>
+                    </div>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    
+                    <button class="btn btn-secondary" onclick="importProducts()" id="importBtn" disabled>
+                        📤 Import Products
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global variables
+        let products = [];
+        let importedData = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Add product form
+            document.getElementById('addProductForm').addEventListener('submit', handleAddProduct);
+
+            // Auto-generate ID from name
+            document.getElementById('productName').addEventListener('input', function(e) {
+                const name = e.target.value;
+                const id = name.toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+                document.getElementById('productId').value = id;
+            });
+
+            // Import file handling
+            const uploadArea = document.getElementById('importUploadArea');
+            const fileInput = document.getElementById('importFile');
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                if (e.dataTransfer.files.length > 0) {
+                    handleFileSelect(e.dataTransfer.files[0]);
+                }
+            });
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Load products from localStorage or use defaults
+        function loadProducts() {
+            const storedProducts = localStorage.getItem('homeai_products');
+            
+            if (storedProducts) {
+                try {
+                    const data = JSON.parse(storedProducts);
+                    products = data.products || [];
+                } catch (error) {
+                    console.error('Error parsing stored products:', error);
+                    products = getDefaultProducts();
+                }
+            } else {
+                products = getDefaultProducts();
+                saveProducts();
+            }
+            
+            renderProductsTable();
+        }
+
+        // Default products
+        function getDefaultProducts() {
+            return [
+                {
+                    id: 'chatgpt',
+                    name: 'ChatGPT Plus',
+                    description: 'Akses premium ke ChatGPT dengan fitur lengkap, response lebih cepat, dan akses prioritas ke fitur terbaru.',
+                    image: 'https://toko-homeai.pro/images/chatgpt.png',
+                    fallbackEmoji: '🤖',
+                    category: 'AI Assistant',
+                    active: true,
+                    prices: { '1': 20000, '2': 40000, '3': 60000, '6': 120000 }
+                },
+                {
+                    id: 'claude',
+                    name: 'Claude Pro',
+                    description: 'Akses premium ke Claude AI dengan kemampuan analisis mendalam, reasoning yang lebih baik, dan limit usage yang lebih tinggi.',
+                    image: 'https://toko-homeai.pro/images/claude.png',
+                    fallbackEmoji: '🧠',
+                    category: 'AI Assistant',
+                    active: true,
+                    prices: { '1': 25000, '2': 50000, '3': 75000, '6': 150000 }
+                }
+            ];
+        }
+
+        // Save products to localStorage
+        function saveProducts() {
+            const data = {
+                products: products,
+                categories: [
+                    'AI Assistant',
+                    'AI Image Generator', 
+                    'AI Coding',
+                    'Productivity',
+                    'Design',
+                    'Writing'
+                ],
+                settings: {
+                    currency: 'IDR',
+                    autoUpdate: true,
+                    lastUpdated: new Date().toISOString().split('T')[0]
+                }
+            };
+            
+            localStorage.setItem('homeai_products', JSON.stringify(data));
+            showMessage('✅ Data produk berhasil disimpan!', 'success');
+        }
+
+        // Handle add product form
+        function handleAddProduct(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const productId = formData.get('productId');
+            
+            // Check if ID already exists
+            if (products.find(p => p.id === productId)) {
+                showMessage('❌ ID produk sudah ada! Gunakan ID yang berbeda.', 'error');
+                return;
+            }
+            
+            const newProduct = {
+                id: productId,
+                name: formData.get('productName'),
+                description: formData.get('productDescription'),
+                image: formData.get('productImage') || '',
+                fallbackEmoji: formData.get('productEmoji'),
+                category: formData.get('productCategory'),
+                active: true,
+                prices: {
+                    '1': parseInt(formData.get('price1')),
+                    '2': parseInt(formData.get('price2')),
+                    '3': parseInt(formData.get('price3')),
+                    '6': parseInt(formData.get('price6'))
+                }
+            };
+            
+            products.push(newProduct);
+            saveProducts();
+            renderProductsTable();
+            
+            // Reset form
+            e.target.reset();
+            
+            showMessage(`✅ Produk "${newProduct.name}" berhasil ditambahkan!`, 'success');
+        }
+
+        // Render products table
+        function renderProductsTable() {
+            const tbody = document.getElementById('productsTableBody');
+            
+            if (products.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem; color: #666;">
+                            Belum ada produk. Tambahkan produk pertama Anda!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>
+                        ${product.fallbackEmoji} ${product.name}
+                    </td>
+                    <td>${product.category}</td>
+                    <td>Rp ${formatPrice(Math.min(...Object.values(product.prices)))}</td>
+                    <td>
+                        <span class="status-badge ${product.active ? 'status-active' : 'status-inactive'}">
+                            ${product.active ? 'Aktif' : 'Nonaktif'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-small btn-secondary" onclick="editProduct('${product.id}')">
+                                ✏️ Edit
+                            </button>
+                            <button class="btn btn-small ${product.active ? 'btn-secondary' : 'btn-success'}" 
+                                    onclick="toggleProduct('${product.id}')">
+                                ${product.active ? '❌ Nonaktifkan' : '✅ Aktifkan'}
+                            </button>
+                            <button class="btn btn-small btn-danger" onclick="deleteProduct('${product.id}')">
+                                🗑️ Hapus
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Toggle product active status
+        function toggleProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                product.active = !product.active;
+                saveProducts();
+                renderProductsTable();
+            }
+        }
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (confirm('Yakin ingin menghapus produk ini?')) {
+                const index = products.findIndex(p => p.id === productId);
+                if (index !== -1) {
+                    const deletedProduct = products.splice(index, 1)[0];
+                    saveProducts();
+                    renderProductsTable();
+                    showMessage(`✅ Produk "${deletedProduct.name}" berhasil dihapus!`, 'success');
+                }
+            }
+        }
+
+        // Edit product (simplified - opens a prompt)
+        function editProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const newName = prompt('Edit nama produk:', product.name);
+            if (newName && newName !== product.name) {
+                product.name = newName;
+                saveProducts();
+                renderProductsTable();
+                showMessage(`✅ Produk berhasil diupdate!`, 'success');
+            }
+        }
+
+        // Export products
+        function exportProducts() {
+            const data = {
+                products: products,
+                categories: [
+                    'AI Assistant',
+                    'AI Image Generator', 
+                    'AI Coding',
+                    'Productivity',
+                    'Design',
+                    'Writing'
+                ],
+                settings: {
+                    currency: 'IDR',
+                    autoUpdate: true,
+                    lastUpdated: new Date().toISOString().split('T')[0]
+                }
+            };
+            
+            // Show preview
+            const jsonOutput = document.getElementById('jsonOutput');
+            jsonOutput.textContent = JSON.stringify(data, null, 2);
+            document.getElementById('jsonPreview').style.display = 'block';
+            
+            // Download file
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'products.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showMessage('✅ File products.json berhasil didownload!', 'success');
+        }
+
+        // Handle file select for import
+        function handleFileSelect(file) {
+            if (!file || file.type !== 'application/json') {
+                showMessage('❌ File harus berformat JSON!', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    importedData = JSON.parse(e.target.result);
+                    
+                    // Validate structure
+                    if (!importedData.products || !Array.isArray(importedData.products)) {
+                        throw new Error('Format JSON tidak valid');
+                    }
+                    
+                    document.getElementById('importUploadArea').innerHTML = `
+                        <p style="color: #28a745;">✅ ${file.name}</p>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                            ${importedData.products.length} produk siap diimport
+                        </p>
+                    `;
+                    
+                    document.getElementById('importBtn').disabled = false;
+                    
+                } catch (error) {
+                    showMessage('❌ File JSON tidak valid: ' + error.message, 'error');
+                    importedData = null;
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // Import products
+        function importProducts() {
+            if (!importedData) {
+                showMessage('❌ Tidak ada data untuk diimport!', 'error');
+                return;
+            }
+            
+            if (confirm(`Yakin ingin mengganti semua produk? Data saat ini akan hilang.\n\nJumlah produk baru: ${importedData.products.length}`)) {
+                products = importedData.products;
+                saveProducts();
+                renderProductsTable();
+                
+                // Reset import area
+                document.getElementById('importUploadArea').innerHTML = `
+                    <p>📁 Klik atau drag file products.json ke sini</p>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Format: JSON (Max: 5MB)</p>
+                `;
+                document.getElementById('importBtn').disabled = true;
+                importedData = null;
+                
+                showMessage(`✅ Berhasil import ${products.length} produk!`, 'success');
+            }
+        }
+
+        // Copy to clipboard
+        function copyToClipboard() {
+            const jsonText = document.getElementById('jsonOutput').textContent;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                showMessage('✅ JSON berhasil disalin ke clipboard!', 'success');
+            }).catch(() => {
+                showMessage('❌ Gagal menyalin ke clipboard', 'error');
+            });
+        }
+
+        // Show message
+        function showMessage(message, type) {
+            const existing = document.querySelector('.success-message, .error-message');
+            if (existing) existing.remove();
+            
+            const div = document.createElement('div');
+            div.className = type === 'success' ? 'success-message' : 'error-message';
+            div.textContent = message;
+            
+            const mainContent = document.querySelector('.main-content');
+            mainContent.insertBefore(div, mainContent.firstChild);
+            
+            setTimeout(() => div.remove(), 5000);
+        }
+
+        // Format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('id-ID').format(price);
+        }
+    </script>
+</body>
+</html>

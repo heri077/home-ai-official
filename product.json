@@ -1,0 +1,137 @@
+{
+  "products": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT Plus",
+      "description": "Akses premium ke ChatGPT dengan fitur lengkap, response lebih cepat, dan akses prioritas ke fitur terbaru.",
+      "image": "https://toko-homeai.pro/images/chatgpt.png",
+      "fallbackEmoji": "🤖",
+      "category": "AI Assistant",
+      "active": true,
+      "prices": {
+        "1": 20000,
+        "2": 40000,
+        "3": 60000,
+        "6": 120000
+      }
+    },
+    {
+      "id": "claude",
+      "name": "Claude Pro",
+      "description": "Akses premium ke Claude AI dengan kemampuan analisis mendalam, reasoning yang lebih baik, dan limit usage yang lebih tinggi.",
+      "image": "https://toko-homeai.pro/images/claude.png",
+      "fallbackEmoji": "🧠",
+      "category": "AI Assistant",
+      "active": true,
+      "prices": {
+        "1": 25000,
+        "2": 50000,
+        "3": 75000,
+        "6": 150000
+      }
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "description": "Akses premium ke Midjourney untuk generate gambar AI berkualitas tinggi dengan unlimited creation dan fast mode.",
+      "image": "https://toko-homeai.pro/images/midjourney.png",
+      "fallbackEmoji": "🎨",
+      "category": "AI Image Generator",
+      "active": true,
+      "prices": {
+        "1": 30000,
+        "2": 60000,
+        "3": 90000,
+        "6": 180000
+      }
+    },
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot",
+      "description": "AI coding assistant yang membantu menulis code lebih cepat dengan suggestions dan auto-completion yang intelligent.",
+      "image": "https://toko-homeai.pro/images/copilot.png",
+      "fallbackEmoji": "💻",
+      "category": "AI Coding",
+      "active": true,
+      "prices": {
+        "1": 35000,
+        "2": 70000,
+        "3": 105000,
+        "6": 210000
+      }
+    },
+    {
+      "id": "gemini",
+      "name": "Google Gemini Advanced",
+      "description": "Akses ke model AI terbaru dari Google dengan kemampuan multimodal, analisis dokumen, dan integrasi Google Workspace.",
+      "image": "https://toko-homeai.pro/images/gemini.png",
+      "fallbackEmoji": "✨",
+      "category": "AI Assistant",
+      "active": true,
+      "prices": {
+        "1": 22000,
+        "2": 44000,
+        "3": 66000,
+        "6": 132000
+      }
+    },
+    {
+      "id": "notion-ai",
+      "name": "Notion AI",
+      "description": "AI writing assistant terintegrasi dengan Notion untuk productivity dan content creation yang lebih efisien.",
+      "image": "https://toko-homeai.pro/images/notion.png",
+      "fallbackEmoji": "📝",
+      "category": "Productivity",
+      "active": true,
+      "prices": {
+        "1": 15000,
+        "2": 30000,
+        "3": 45000,
+        "6": 90000
+      }
+    },
+    {
+      "id": "canva-pro",
+      "name": "Canva Pro",
+      "description": "Akses premium ke Canva dengan AI design tools, unlimited downloads, dan brand kit untuk kebutuhan design profesional.",
+      "image": "https://toko-homeai.pro/images/canva.png",
+      "fallbackEmoji": "🎨",
+      "category": "Design",
+      "active": true,
+      "prices": {
+        "1": 18000,
+        "2": 36000,
+        "3": 54000,
+        "6": 108000
+      }
+    },
+    {
+      "id": "grammarly",
+      "name": "Grammarly Premium",
+      "description": "AI writing assistant untuk grammar check, style suggestions, plagiarism detection, dan tone adjustment.",
+      "image": "https://toko-homeai.pro/images/grammarly.png",
+      "fallbackEmoji": "✍️",
+      "category": "Writing",
+      "active": true,
+      "prices": {
+        "1": 20000,
+        "2": 40000,
+        "3": 60000,
+        "6": 120000
+      }
+    }
+  ],
+  "categories": [
+    "AI Assistant",
+    "AI Image Generator", 
+    "AI Coding",
+    "Productivity",
+    "Design",
+    "Writing"
+  ],
+  "settings": {
+    "currency": "IDR",
+    "autoUpdate": true,
+    "lastUpdated": "2025-01-28"
+  }
+}
